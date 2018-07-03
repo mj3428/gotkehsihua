@@ -81,8 +81,10 @@ rw = RadomWalk #实例化
 rw.fill_walk() #调用
 plt.scatter(rw.x_values,rw.y_values,s=15)
 plt.show()
+#模拟多次 输入y继续
+keep_running = input("Make another walk?(y/n): ")
+if keep_running == 'n':
+  break
+#设置图表样式
 
 
-
-
-    
