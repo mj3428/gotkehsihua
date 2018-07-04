@@ -33,8 +33,9 @@ for btc_dict in btc_data:
   month = btc_dict['month']
   week  = btc_dict['week']
   weekday=btc_dcit['weekday']
-  close = btc_dict['close']
+  close = float(btc_dict['close'])#这里要将数值转换一下,变为浮点数
   print("{}is month{}week{},{},the colse price is{}RMB".format(date,month,week,weekday,close))
 #结果如下：
 #2017-01-01 is month 01 week 52,Sunday,the close price is 6928.6492 RMB
 #2017-01-02 is month 01 week 1 ,Monday,the close price is 7070.2554 RMB
+
