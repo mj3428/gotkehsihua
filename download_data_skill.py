@@ -24,5 +24,11 @@ with open(filename) as f:
   
   highs = []
   for row in reader:
-    highs.append(row[1])#遍历文件中余下的各行，循环从第二行开始
+    highs.append(row[1])#遍历文件中余下的各行，循环从第二行开始，若为非数值型，进行int
+  print(highs)
+  
+  highs = []
+  for row in reader:
+    high = int(row[1])
+    highs.append(high)
   print(highs)
