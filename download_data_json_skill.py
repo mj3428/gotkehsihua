@@ -39,3 +39,27 @@ for btc_dict in btc_data:
 #2017-01-01 is month 01 week 52,Sunday,the close price is 6928.6492 RMB
 #2017-01-02 is month 01 week 1 ,Monday,the close price is 7070.2554 RMB
 
+#绘制收盘图
+#数据较大，进行编排
+--snip--
+date  = []
+month = []
+week  = []
+weekday=[]
+close = []
+#每天的信息
+for btc_dict in btc_data:
+  dates.append(btc_dict['date'])
+  months.append(month = btc_dict['month'])
+  weeks.append(btc_dict['week'])
+  weekdays.append(btc_dcit['weekday'])
+  close.append(int(float(btc_dict['close'])))
+import pygal
+
+line_chart = pygal.Line(x_label_rotation=20,show_minor_x_labels=False)#x轴的标签顺时针旋转20°
+line_chart.title = '收盘价（¥）'
+line_chart.xlabels = dates
+N = 20#X轴坐标每20天显示一次
+line_chart.x_labels_major = dates[::N]
+line_cahrt.add('收盘价'，close)
+line_chart.render_to_file('收盘价折线图.svg')
