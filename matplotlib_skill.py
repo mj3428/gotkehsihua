@@ -97,3 +97,12 @@ while True:
 keep_running = input("Make another walk?(y/n): ")
 --snip--
 
+#调整尺寸以适合屏幕
+while True:
+  #创建一个RandomWalk实例
+  rw = RandomWalk()
+  rw.fill_walk()
+#设置绘图窗口的尺寸
+plt.figure(figsize=(10,6))
+--snip--
+
