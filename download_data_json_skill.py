@@ -63,3 +63,48 @@ N = 20#X轴坐标每20天显示一次
 line_chart.x_labels_major = dates[::N]
 line_cahrt.add('收盘价'，close)
 line_chart.render_to_file('收盘价折线图.svg')
+
+#时间序列
+--snip--
+import pygal
+import math
+line_chart = pygal.Line(x_label_rotation=20,show_minor_x_labels=False)
+line_chart.title = '收盘价对数变换（¥）'
+line_chart.xlabels = dates
+N = 20#X轴坐标每20天显示一次
+line_chart.x_labels_major = dates[::N]
+close_log = [math.log10(_) for _in close]
+line_chart.add('log收盘价'，close_log)
+line.chart.render_to_file('收盘价对数变换折线图（¥）.svg')
+
+#均值
+--snip--
+from itertools import groupby #groupby是在itertools模块中的，用于分组
+def draw_line(x_data,y_data,title,y_legend):
+  xy_map = [] #存储变量的均值
+  for x,y in groupby(sorted(zip(x_data,y_data)),key=lambda _:_[0]):
+    y_list = [v for _,v in y]
+    xy_map.append([x,sum(y_list)/len(y_list)])
+  x_unique,y_mean = [*zip(*xy_map)]
+  line_chart = pygal.Line()
+  line_chart.title = title
+  line.chart.x_labels = x_unique
+  line_chart.add(y_legend,y_mean)
+  line_chart.render_to_file(title+'.svg')
+  return line_chart
+#确定周数和收盘价的取数范围
+idx_month = dates.index('2017-12-01')
+line_chart_month = draw_line(months[:idx_month],close[:idx_month],'收盘价月日均值（¥）','月日均值')
+line_chart_month
+#周
+idx_week = dates.index('2017-12-11')
+line_chart_week = draw_line(weeks[1:idx_week],close[1:idx_week],'收盘价周日均值（¥）','周日均值')
+line_chart_week
+
+#整合 建立收盘价仪表盘
+--snip--
+with open('收盘价Dashboard.html','w',encoding='utf8') as html_file:
+  html_file.write('<html><head><title>收盘价Dashboard</title><metacharset="utf-8"></head><body>\n')
+  for svg in ['收盘价折线图.svg','收盘价对数变换折线图（¥）.svg','收盘价月日均值（¥）.svg','收盘价周日均值（¥）.svg']:
+    html_file.write('<object type="image/svg+xml" date="{0}"height=500></objest>\n'.format(svg))
+  html_file.write('</body></html>')  
