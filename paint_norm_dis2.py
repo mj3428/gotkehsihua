@@ -69,7 +69,7 @@ width_a = (length_a[1]-length_a[0])/(len(bins_a)-1)
 print (n_a,length_a,width_a,np.sum(n_a)) #n代表直方图的柱子的y值
 #显示数字标签 ha代表对齐方式
 for a,b in zip(bins_a,n_a):
-    plt.text(a,b + 0.0025,'%.1f%%'%(b*width_a*100),ha='left', va= 'bottom',fontsize=6)
+    plt.text(a,b + 0.0025,'%.1f%%'%(b*width_a*100*0.9),ha='left', va= 'bottom',fontsize=6)
 #拟合Ua
 y_a = stats.norm.pdf(bins_a, mu[0], sigma[0])
 norm_a = plt.plot(bins_a, y_a, color='gold',linestyle='--',label='norm')
@@ -88,7 +88,7 @@ length_b = plt.xlim()
 width_b = (length_b[1]-length_b[0])/(len(bins_b)-1)
 print (n_b,length_b,width_b) #n代表直方图的柱子的y值
 for a,b in zip(bins_b,n_b):
-    plt.text(a,b + 0.0025,'%.1f%%'%(b*width_b*100),ha='left', va= 'bottom',fontsize=6)
+    plt.text(a,b + 0.0025,'%.1f%%'%(b*width_b*100*0.9),ha='left', va= 'bottom',fontsize=6)
 #拟合Ub
 y_b = stats.norm.pdf(bins_b, mu[1], sigma[1])
 norm_b = plt.plot(bins_b, y_b, 'g--',label='norm')
@@ -107,7 +107,7 @@ length_c = plt.xlim()
 width_c = (length_c[1]-length_c[0])/(len(bins_c)-1)
 print (n_c,length_c,width_c) #n代表直方图的柱子的y值
 for a,b in zip(bins_c,n_c):
-    plt.text(a,b + 0.0025,'%.1f%%'%(b*width_c*100),ha='left', va= 'bottom',fontsize=6)
+    plt.text(a,b + 0.0025,'%.1f%%'%(b*width_c*100*0.9),ha='left', va= 'bottom',fontsize=6)
 #拟合Uc
 y_c = stats.norm.pdf(bins_c, mu[2], sigma[2])
 norm_c = plt.plot(bins_c, y_c, 'r--',label='norm')
