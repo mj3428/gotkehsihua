@@ -59,7 +59,7 @@ fig = plt.figure(figsize=[12.0,4.0],dpi=144,facecolor='gainsboro')
 
 #数据,数组，透明度，组宽，显示频率 (n,bins,patches分别是hist模块返回的数据)#这里denisity用来拟合正态分布
 #n返回数组 bins返回直方图个数加1 patches返回类型及个数
-#Ua
+###############Ua###############
 plt.subplot(131)
 n_a, bins_a, patches_c = plt.hist(df.Ua,bins=13,alpha=0.6,\
                                   rwidth=0.9,color='orange',\
@@ -67,7 +67,7 @@ n_a, bins_a, patches_c = plt.hist(df.Ua,bins=13,alpha=0.6,\
 length_a = plt.xlim()
 width_a = (length_a[1]-length_a[0])/(len(bins_a)-1)
 print (n_a,length_a,width_a,np.sum(n_a)) #n代表直方图的柱子的y值
-#显示数字标签 ha代表对齐方式
+#显示数字标签 ha代表对齐方式 0.9代表上面的直方图柱子的宽度 需要乘
 for a,b in zip(bins_a,n_a):
     plt.text(a,b + 0.0025,'%.1f%%'%(b*width_a*100*0.9),ha='left', va= 'bottom',fontsize=6)
 #拟合Ua
@@ -79,7 +79,7 @@ plt.legend(fontsize=6,loc='upper left')
 plt.xlabel('Ua',fontsize=9)
 plt.ylabel('Pdf',fontsize=9)
 
-#Ub
+###############Ub###############
 plt.subplot(132)
 n_b, bins_b, patches_b = plt.hist(df.Ub,bins=13,alpha=0.6,\
                                   rwidth=0.9,color='mediumseagreen', \
@@ -87,6 +87,7 @@ n_b, bins_b, patches_b = plt.hist(df.Ub,bins=13,alpha=0.6,\
 length_b = plt.xlim()
 width_b = (length_b[1]-length_b[0])/(len(bins_b)-1)
 print (n_b,length_b,width_b) #n代表直方图的柱子的y值
+#显示数字标签 ha代表对齐方式 0.9代表上面的直方图柱子的宽度 需要乘
 for a,b in zip(bins_b,n_b):
     plt.text(a,b + 0.0025,'%.1f%%'%(b*width_b*100*0.9),ha='left', va= 'bottom',fontsize=6)
 #拟合Ub
@@ -98,7 +99,7 @@ plt.legend(fontsize=6,loc='upper left')
 plt.xlabel('Ub',fontsize=9)
 plt.ylabel('Pdf',fontsize=9)
 
-#Uc
+###############Uc###############
 plt.subplot(133)
 n_c, bins_c, patches_c = plt.hist(df.Uc,bins=13,alpha=0.6,\
                                   rwidth=0.9,color='orangered', \
@@ -106,6 +107,7 @@ n_c, bins_c, patches_c = plt.hist(df.Uc,bins=13,alpha=0.6,\
 length_c = plt.xlim()
 width_c = (length_c[1]-length_c[0])/(len(bins_c)-1)
 print (n_c,length_c,width_c) #n代表直方图的柱子的y值
+#显示数字标签 ha代表对齐方式 0.9代表上面的直方图柱子的宽度 需要乘
 for a,b in zip(bins_c,n_c):
     plt.text(a,b + 0.0025,'%.1f%%'%(b*width_c*100*0.9),ha='left', va= 'bottom',fontsize=6)
 #拟合Uc
