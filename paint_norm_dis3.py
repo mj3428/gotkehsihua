@@ -61,7 +61,7 @@ fig = plt.figure(figsize=[11.0,3.8],dpi=144,facecolor='gainsboro')
 #n返回数组 bins返回直方图个数加1 patches返回类型及个数
 #Ua
 plt.subplot(131)
-n_a, bins_a, patches_c = plt.hist(df.Ua,bins=13,alpha=0.6,\
+n_a, bins_a, patches_a = plt.hist(df.Ua,bins=13,alpha=0.6,\
                                   rwidth=0.9,color='orange',\
                                   label='Probability',density=False)
 sum_a =np.sum(n_a) #a电压的总数
