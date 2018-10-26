@@ -3,3 +3,4 @@ https://www.cnblogs.com/zxtceq/p/7690946.html #安装及可视化
 http://www.tutorialspoint.com/mongodb/mongodb_create_database.htm #入门
 https://www.cnblogs.com/zxtceq/category/837493.html #目录
 https://www.cnblogs.com/dacongge/p/7346037.html #Robomongo 3T使用方法
+https://github.com/Python3WebSpider/Images360/blob/master/images360/pipelines.py #操作mongo和mysql
