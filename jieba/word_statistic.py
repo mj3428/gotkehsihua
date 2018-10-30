@@ -18,7 +18,7 @@ from PIL import Image  # 图像处理库
 import matplotlib.pyplot as plt  # 图像展示库
 
 # 读取文本文件
-fn = open('e:/python_book/chapter4/article1.txt')  # 以只读方式打开文件
+fn = open('e:/python_book/chapter4/article1.txt')  # 以只读方式打开文件 在遇到gbk和gb18030都无法打开的情况，使用'r'方式打开编码使用utf-8
 string_data = fn.read()  # 使用read方法读取整段文本
 fn.close()  # 关闭文件对象
 
