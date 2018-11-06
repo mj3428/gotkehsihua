@@ -1,0 +1,10 @@
+https://www.bennythink.com/mysql-es-mongo.html #详情
+关于简单的方法：
+咋办捏？最笨的办法哈，从 MySQL 中读取一行，根据列名转换成对应形式的字典，然后插入到 MongoDB/ES 中，
+然后再读一行，转换，插入，直到读取完。这样吧，说实话，效率是有点低，但是也能完成任务对吧。
+包括俺的 mentor、还有其他 Python 的专家们，都反对俺这种读一行写一行的处理方式。
+
+另外一种：
+其实啊，我也知道insert_many()、executemany()和writelines()这种批量的方法，另一种思路呢，就是把数据存到一个列表里，然后迭代批量操作。
+但是怎奈我都是处理很大的数据的，如果一下子把这些东西塞到内存里，怕是没等运行完呢？
+就 Memory Error 或者发生大量的 swap 交换再 Kernel Panic 了吧。
