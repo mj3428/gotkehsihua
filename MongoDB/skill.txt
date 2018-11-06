@@ -5,3 +5,11 @@ https://www.cnblogs.com/zxtceq/category/837493.html #目录
 https://www.cnblogs.com/dacongge/p/7346037.html #Robomongo 3T使用方法
 https://github.com/Python3WebSpider/Images360/blob/master/images360/pipelines.py #操作mongo和mysql
  “_id"： 这个字段是数据库默认给我们加的GUID，目的就是保证数据的唯一性。
+
+ 在10w条这么简单的集合中查找一个文档要114毫秒有一点点让人不能接收，好，那么我们该如何优化呢？mongodb中给
+我们带来了索引查找，看看能不能让我们的查询一飞冲天.....
+我们使用了ensureIndex在name上建立了索引。”1“：表示按照name进行升序，”-1“：表示按照name进行降序。
+   cursor:       这里出现的是”BtreeCursor"，这么牛X，mongodb采用B树的结构来存放索引，索引名为后面的“name_1"。
+   nscanned:  我擦，数据库只浏览了一个文档就OK了。
+   n:             直接定位返回。
+   millis:        看看这个时间真的不敢相信，秒秒杀。
