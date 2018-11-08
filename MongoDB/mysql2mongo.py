@@ -133,5 +133,5 @@ class MongodbConfig(object):
         self._combine_and_insert(data)
         self._drop_duplicates()
 
-MGDB = MongodbConfig(database='zjnad',collection='2018sep')
+MGDB = MongodbConfig(database='****',collection='2018sep')
 MGDB.data_to_db()
