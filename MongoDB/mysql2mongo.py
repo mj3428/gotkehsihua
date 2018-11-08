@@ -109,12 +109,12 @@ class MongodbConfig(object):
 
         return data['dups']
 
-    def _drop_duplicates(self):
+        def _drop_duplicates(self):
         """删除重复数据"""
         coll = self._set_collection()
         c = coll.aggregate([{"$group":
-                                 {"_id": {'date': '$date'},
-                                  "count": {'$sum': 1},
+                                 {"_id": {'id': '$id'},      #记住去了解一下此处是如何去重的
+                                  #"count": {'$sum': 1},
                                   "dups": {'$addToSet': '$_id'}}},
                             {'$match': {'count': {"$gt": 1}}}
                             ]
