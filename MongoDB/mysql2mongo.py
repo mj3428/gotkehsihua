@@ -115,7 +115,7 @@ class MongodbConfig(object):
         c = coll.aggregate([{"$group":
                                  {"_id": {'id': '$id'},      #记住去了解一下此处是如何去重的
                                   #"count": {'$sum': 1},
-                                  "dups": {'$addToSet': '$_id'}}},
+                                  "dups": {'$addToSet': '$_id'}}},  #$push代表追加内容
                             {'$match': {'count': {"$gt": 1}}}
                             ]
                            )
