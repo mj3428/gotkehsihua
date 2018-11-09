@@ -5,6 +5,7 @@ https://www.cnblogs.com/zxtceq/category/837493.html #目录
 https://www.cnblogs.com/dacongge/p/7346037.html #Robomongo 3T使用方法
 https://github.com/Python3WebSpider/Images360/blob/master/images360/pipelines.py #操作mongo和mysql
  “_id"： 这个字段是数据库默认给我们加的GUID，目的就是保证数据的唯一性。
+ https://www.cnblogs.com/camilla/p/7908027.html #聚合的练习
 
  在10w条这么简单的集合中查找一个文档要114毫秒有一点点让人不能接收，好，那么我们该如何优化呢？mongodb中给
 我们带来了索引查找，看看能不能让我们的查询一飞冲天.....
