@@ -51,6 +51,13 @@ df['I_ave'] = (df.Ia + df.Ib + df.Ic)/3
 df['U_ave'] = (df.Ua + df.Ub + df.Uc)/3
 #print(df.P.head(12),df.Q.head(12))
 df['LP'] = np.sqrt(pow(df.P,2) + pow(df.Q,2))/KVA*100
+
+#重新对时间排序
+pd.to_datetime(df.ds, format='%Y-%m-%d %H:%M:%S')
+#print(df.ds.head(12))
+df = df.sort_values(by='ds')
+df.reset_index(inplace=True) #重新构造索引
+
 values = np.array(df.LP)
 print(values)
 arr = np.array(df.ds)
