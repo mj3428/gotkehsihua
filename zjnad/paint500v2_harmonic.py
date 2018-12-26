@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 '''
-@author: miaojue
+@author: mj
 @contact: major3428@foxmail.com
 @software: pycharm
 @file: paint500v2_harmonic.py
