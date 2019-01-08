@@ -1,6 +1,6 @@
 ## 关于pd.Gouper里的时间频率
 
-| Alias | 一个普通标题 |
+| Alias | Description |
 | :------ | :------ | 
 |B	|business day frequency|
 |C	|custom business day frequency|
