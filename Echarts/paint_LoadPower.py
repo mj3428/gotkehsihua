@@ -53,7 +53,7 @@ df['U_ave'] = (df.Ua + df.Ub + df.Uc)/3
 df['LP'] = np.sqrt(pow(df.P,2) + pow(df.Q,2))/KVA*100
 
 #重新对时间排序
-pd.to_datetime(df.ds, format='%Y-%m-%d %H:%M:%S')
+df.ds = pd.to_datetime(df.ds, format='%Y-%m-%d %H:%M:%S')
 #print(df.ds.head(12))
 df = df.sort_values(by='ds')
 df.reset_index(inplace=True) #重新构造索引
