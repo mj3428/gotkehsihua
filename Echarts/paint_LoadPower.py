@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 '''
-@author: miaojue
+@author: miaoj
 @contact: major3428@foxmail.com
 @software: pycharm
 @file: paint_LoadPower.py
@@ -57,6 +57,7 @@ pd.to_datetime(df.ds, format='%Y-%m-%d %H:%M:%S')
 #print(df.ds.head(12))
 df = df.sort_values(by='ds')
 df.reset_index(inplace=True) #重新构造索引
+df.ds = pd.to_datetime(df.ds).dt.strftime('%m-%d %H:%M') #可以修改datetime的形式
 
 values = np.array(df.LP)
 print(values)
