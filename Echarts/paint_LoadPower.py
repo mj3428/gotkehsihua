@@ -56,7 +56,7 @@ df['LP'] = np.sqrt(pow(df.P,2) + pow(df.Q,2))/KVA*100
 df.ds = pd.to_datetime(df.ds, format='%Y-%m-%d %H:%M:%S')
 #print(df.ds.head(12))
 df = df.sort_values(by='ds')
-df.reset_index(inplace=True) #重新构造索引
+df.reset_index(inplace=True) #重新构造索引 drop=True可以删除原index
 df.ds = pd.to_datetime(df.ds).dt.strftime('%m-%d %H:%M') #可以修改datetime的形式
 
 values = np.array(df.LP)
