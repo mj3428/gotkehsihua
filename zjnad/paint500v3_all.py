@@ -18,7 +18,7 @@ from scipy import stats
 
 
 #读取
-df = pd.read_csv('./data/yichang1_Dec.csv',index_col=0)
+df = pd.read_csv('./data/jmrz_semi.csv', encoding='gbk', index_col=None)
 #index_col=0去掉索引
 #更名
 df.rename(columns={'采集时间': 'ds', 'A相电流': 'Ia', 'B相电流': 'Ib', 'C相电流': 'Ic',
@@ -26,6 +26,9 @@ df.rename(columns={'采集时间': 'ds', 'A相电流': 'Ia', 'B相电流': 'Ib',
                    'A相电压': 'Ua', 'B相电压': 'Ub', 'C相电压': 'Uc',
                    'A相电压THD': 'Ua_THD', 'B相电压THD': 'Ub_THD', 'C相电压THD': 'Uc_THD',
                    '总功率因数': 'PF', '三相无功功率': 'Q', '三相有功功率': 'P',
+                   'A相有功功率': 'Pa', 'B相有功功率': 'Pb', 'C相有功功率': 'Pc',
+                   'A相无功功率': 'Qa', 'B相无功功率': 'Qb', 'C相无功功率': 'Qc',
+                   'A相功率因数': 'PFa', 'B相功率因数': 'PFb', 'C相功率因数': 'PFc',
                    'A相电流H3': 'Ia_H3', 'A相电流H5': 'Ia_H5', 'A相电流H7': 'Ia_H7',
                    'A相电流H9': 'Ia_H9', 'A相电流H11': 'Ia_H11', 'A相电流H13': 'Ia_H13',
                    'A相电流H15': 'Ia_H15', 'A相电流H17': 'Ia_H17', 'A相电流H19': 'Ia_H19',
@@ -38,7 +41,8 @@ df.rename(columns={'采集时间': 'ds', 'A相电流': 'Ia', 'B相电流': 'Ib',
                    'C相电流H9': 'Ic_H9', 'C相电流H11': 'Ic_H11', 'C相电流H13': 'Ic_H13',
                    'C相电流H15': 'Ic_H15', 'C相电流H17': 'Ic_H17', 'C相电流H19': 'Ic_H19',
                    'C相电流H21': 'Ic_H21'
-                   }, inplace=True)
+                   },inplace = True)
+
 freq = len(df.ds) #总样本频次
 
 #判断不平衡
@@ -49,8 +53,15 @@ def jungle(a):
         value = max(abs(a['Ia'] - a['I_ave']), abs(a['Ib'] - a['I_ave']), abs(a['Ic'] - a['I_ave'])) / a['I_ave']
         return value
 
+#清洗数据
+for i in df.columns:
+    if df[i].isnull().any() == True:
+        df[i].fillna(df[i].mean(),inplace=True)
+
 #需要的变量
-KVA = 800000 #变压器容量大小
+KVA = 1600000 #变压器容量大小
+ele_n = KVA * 1.4434 / 1000#额定电流
+df['PF'] = df['PF'].apply(lambda x:abs(x))
 df['I_ave'] = (df.Ia + df.Ib + df.Ic) / 3
 df['U_ave'] = (df.Ua + df.Ub + df.Uc) / 3
 df['LF'] = np.sqrt(pow(df.P, 2) + pow(df.Q, 2)) / KVA * 100
@@ -78,8 +89,10 @@ mpl.rcParams['font.sans-serif'] = ['Microsoft Yahei']
 mpl.rcParams['font.family'] = 'sans-serif'#解决负号'-'显示为方块的问题
 mpl.rcParams['axes.unicode_minus'] = False
 
+print(df.columns)
+
 #合格率内容
-qr_i = np.array([len(df.query('Ia < 2886.8')), len(df.query('Ib < 2886.8')), len(df.query('Ic < 2886.8'))]) / freq
+qr_i = np.array([len(df.ix[df.Ia < ele_n]), len(df.ix[df.Ib < ele_n]), len(df.ix[df.Ic < ele_n])]) / freq
 ur_i = 1 - qr_i
 qr_u = np.array([len(df.query('Ua < 235')), len(df.query('Ub < 235')), len(df.query('Uc < 235'))]) / freq
 ur_u = 1 - qr_u
@@ -106,6 +119,7 @@ labels_lf = {'GZ1': ['轻载 %.1f%%' % (qr_lf * 100), '1级过载 %.1f%%' % (gz_
 values_unb = [qr_unb, ur_unb]
 labels_unb = ['合格率 %.1f%%' % (qr_unb * 100), '不合格率 %.1f%%' % (ur_unb * 100)]
 
+
 #谐波电流处理
 A1 = df.Ia
 df['iam3'], df['iam5'] = A1 * df.Ia_H3 / 100, A1 * df.Ia_H5 / 100
@@ -123,6 +137,8 @@ df['icm7'], df['icm9'] = A3 * df.Ic_H7 / 100, A3 * df.Ic_H9 / 100
 df['icm11'], df['icm13'], df['icm15'] = A3 * df.Ic_H11 / 100, A3 * df.Ic_H13 / 100, A3 * df.Ic_H15 / 100
 df['icm17'], df['icm19'], df['icm21'] = A3 * df.Ic_H17 / 100, A3 * df.Ic_H19 / 100, A3 * df.Ic_H21 / 100
 
+
+print(df.isnull().any()) # 有缺失值
 # 最大值
 max_A = np.max([df.iam3, df.iam5, df.iam7, df.iam9, df.iam11, df.iam13, df.iam15, df.iam17, df.iam19, df.iam21],
                axis=1)
@@ -139,8 +155,9 @@ mean_B = np.mean(
 mean_C = np.mean(
     [df.icm3, df.icm5, df.icm7, df.icm9, df.icm11, df.icm13, df.icm15, df.icm17, df.icm19, df.icm21], axis=1)
 
-Y = [max_A, max_B, max_C]
-Z = [mean_A, mean_B, mean_C]
+yyy = [max_A, max_B, max_C]
+zzz = [mean_A, mean_B, mean_C]
+
 rank = [0, 1, 2]
 color_hv = ['gold', 'mediumaquamarine', 'lightcoral']
 phase = ['A', 'B', 'C']
@@ -591,7 +608,7 @@ class Paint:
             plt.close()
         return
 
-    def paint_hvmax(self, args=Y, save=1):
+    def paint_hvmax(self, args=yyy, save=1):
         fig8 = plt.figure(figsize=[9, 4], dpi=180, facecolor='gainsboro')
         sum = 0
         for i in rank:
@@ -618,7 +635,7 @@ class Paint:
             plt.close()
         return
 
-    def paint_hvmean(self, args=Z, save=1):
+    def paint_hvmean(self, args=zzz, save=1):
         import matplotlib.pyplot as plt
         fig9 = plt.figure(figsize=[9, 4], dpi=180, facecolor='gainsboro')
         sum = 0
@@ -677,3 +694,21 @@ class Paint:
 #测试画图
 if __name__ == "__main__":
     p = Paint()
+    p.pos = 'upper left' #改变标签位置 一般为upper left
+    p.paint_u() #画电压
+    p.paint_upie() #画电压合格率
+    p.pos = 'upper left' #改变标签位置
+    p.paint_i() #画电流
+    p.paint_ipie() #画电流合格率
+    p.paint_uthd() #画电压THD
+    p.paint_uthdpie() #画电压THD合格率
+    p.pos = 'upper right'
+    p.paint_unb() #画不平衡
+    p.pos = 'upper left' #出现标签挡住了图形 改变位置 一般为upper left或者upper right，也可以放中间'upper center'
+    p.paint_pf() #画功率因数
+    #p.pos = 'upper right'  # 图形标签位置
+    #p.beta = 0.5  # 调整曲线的高度 范围为0~1 觉得曲线高度太高了可以在对应图形上面加上该语句
+    p.paint_lf(args='GZ1')  # 有二级过载时括号内填 args='GZ2'；没有则填'GZ1'(不要忘记引号)
+    p.paint_hvmean(args=zzz)  # 画谐波均值
+    p.paint_hvmax(args=yyy) #画谐波最大值
+    p.paint_hvqr(qr_ithd) #画谐波合格率
