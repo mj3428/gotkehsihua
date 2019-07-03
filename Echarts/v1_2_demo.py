@@ -70,6 +70,7 @@ df = df.groupby([pd.Grouper(key='ds', freq='D')])['Ua', 'Ub', 'Uc', 'Ia','Ib','I
 #print(df.index) #ds变为index行
 #print(df.head(16))
 #df['Date'] = pd.to_datetime(df.index).dt.strftime('%m-%d %H:%M')
+df = df.loc[df.Ua.isnull() != True] #处理空值，可不处理
 KVA = 1600000 #变压器容量
 
 #df['Date'] = [d.strftime('%m-%d %H:%M') for d in df.index]
