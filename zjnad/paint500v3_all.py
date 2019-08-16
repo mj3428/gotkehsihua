@@ -472,7 +472,7 @@ class Paint:
                                                       label='概率', density=False)
         for a, b in zip(bins_thduc, n_thduc):
             plt.text(a, b + 2, '%.1f%%' % (b / freq * 100), ha='left', va='bottom', fontsize=6)
-        if np.max(df.Uc_THD,axis=0):
+        if np.max(df.Uc_THD,axis=0) > 5:
             plt.vlines(5, 0, np.max(n_thduc, axis=0) * self.gama,
                        colors=self.color_kinds['C1'], linestyles='-.', label='上限 5%')
         plt.legend(fontsize=6, loc='upper right')
